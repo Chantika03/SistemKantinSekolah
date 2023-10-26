@@ -10,20 +10,32 @@
     <form action="add.php" method="post" name="form1">
         <table width="25%" border="0">
             <tr> 
-                <td>Id_penjual</td>
-                <td><input type="int" name="Id_penjual"></td>
+                <td>Id_menu</td>
+                <td><input type="int" name="Id_menu"></td>
+            </tr>
+            <tr> 
+                <td>Jenis</td>
+                <td><select name="Jenis">
+                    <option value="makanan"> Makanan <select\>
+                    <option value="minuman"> Minuman <select\>
+
+                    </td>
+            </tr>
+            <tr> 
+                <td>Harga</td>
+                <td><input type="varchar" name="Harga"></td>
             </tr>
             <tr> 
                 <td>Nama</td>
                 <td><input type="varchar" name="Nama"></td>
             </tr>
             <tr> 
-                <td>No_hp</td>
-                <td><input type="int" name="No_hp"></td>
+                <td>Stok</td>
+                <td><input type="varchar" name="Stok"></td>
             </tr>
             <tr> 
-                <td>Alamat</td>
-                <td><input type="varchar" name="Alamat"></td>
+                <td>Id_penjual</td>
+               
             </tr>
             <tr> 
                 <td></td>
@@ -36,16 +48,18 @@
  
     // Check If form submitted, insert form data into users table.
     if(isset($_POST['Submit'])) {
-        $Id_penjual = $_POST['Id_penjual'];
+        $Id_menu = $_POST['Id_menu'];
+        $Jenis = $_POST['Jenis'];
+        $Harga = $_POST['Harga'];
         $Nama = $_POST['Nama'];
-        $No_hp = $_POST['No_hp'];
-        $Alamat = $_POST['Alamat'];
+        $Stok = $_POST['Stok'];
+        $Id_penjual = $_POST['Id_penjual'];
         
         // include database connection file
         include_once("config.php");
                 
         // Insert user data into table
-        $result = mysqli_query($mysqli, "INSERT INTO penjual (Id_penjual,Nama,No_hp,Alamat) VALUES ('$Id_penjual','$Nama','$No_hp','$Alamat')");
+        $result = mysqli_query($mysqli, "INSERT INTO menu (Id_menu,Jenis,Harga,Nama,Stok,Id_penjual) VALUES ('$Id_menu','$Jenis','$Harga','$Nama','$Stok','$Id_penjual')");
         
         // Show message when user added
         echo "User added successfully. <a href='index.php'>View Users</a>";
