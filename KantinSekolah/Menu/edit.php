@@ -5,9 +5,9 @@ include_once("config.php");
 // Check if form is submitted for user update, then redirect to homepage after update
 if(isset($_POST['update']))
 {	
-    $id = $_POST['Id_menu'];
+    $id = $_POST['Id_Menu'];
     
-    $Id_menu=$_POST['Id_menu'];
+    $Id_Menu=$_POST['Id_Menu'];
     $Jenis=$_POST['Jenis'];
     $Harga=$_POST['Harga'];
     $Nama=$_POST['Nama'];
@@ -15,7 +15,7 @@ if(isset($_POST['update']))
     $Id_penjual=$_POST['Id_penjual'];
         
     // update user data
-    $result = mysqli_query($mysqli, "UPDATE menu SET Id_menu= '$Id_menu',Jenis= '$Jenis',Harga= '$Harga',Nama= '$Nama',Stok= ' $Stok',Id_penjual= ' $Id_penjual'  WHERE Id_menu=$id");
+    $result = mysqli_query($mysqli, "UPDATE menu SET Id_Menu= '$Id_Menu',Jenis= '$Jenis',Harga= '$Harga',Nama= '$Nama',Stok= '$Stok',Id_penjual= '$Id_penjual'  WHERE Id_Menu=$id");
     
     // Redirect to homepage to display updated user in list
     header("Location: index.php");
@@ -24,15 +24,15 @@ if(isset($_POST['update']))
 <?php
 // Display selected user data based on id
 // Getting id from url
-$id = $_GET['Id_menu'];
+$id = $_GET['Id_Menu'];
  
 // Fetech user data based on id
-$result = mysqli_query($mysqli, "SELECT * FROM menu WHERE Id_menu=$id");
+$result = mysqli_query($mysqli, "SELECT * FROM menu WHERE Id_Menu=$id");
  
 while($user_data = mysqli_fetch_array($result))
 {
     
-    $Id_menu=$user_data['Id_menu'];
+    $Id_Menu=$user_data['Id_Menu'];
     $Jenis=$user_data['Jenis'];
     $Harga=$user_data['Harga'];
     $Nama=$user_data['Nama'];
@@ -53,11 +53,15 @@ while($user_data = mysqli_fetch_array($result))
         <table border="0">
             <tr> 
                 <td>Id_menu</td>
-                <td><input type="int" name="Id_menu" value=<?php echo $Id_menu;?>></td>
+                <td><input type="int" name="Id_Menu" value=<?php echo $Id_Menu;?>></td>
             </tr>
             <tr> 
-                <td>Jenis</td>
-                <td><input type="varchar" name="Jenis" value=<?php echo $Jenis;?>></td>
+            <td>Jenis</td>
+                <td><select name="Jenis">
+                    <option value="makanan"> Makanan <select\>
+                    <option value="minuman"> Minuman <select\>
+
+                    </td>
             </tr>
             <tr> 
                 <td>Harga</td>
@@ -73,10 +77,22 @@ while($user_data = mysqli_fetch_array($result))
             </tr>
             <tr> 
                 <td>Id_penjual</td>
-                <td><input type="varchar" name="Id_penjual" value=<?php echo $Id_penjual;?>></td>
+                <?php
+                include "config.php";
+                $query = "SELECT * FROM penjual";
+                $datapenjual = mysqli_query($mysqli, $query);               
+                ?>
+
+                <td><select name="Nama" id="">
+                    <?php
+                    while ($row = mysqli_fetch_array($datapenjual)) {
+                    ?>
+                    <option value="<?=$row['Id_penjual'] ?>"><?=$row['Nama']?></option>
+                    <?php } ?>
+               
             </tr>
             <tr>
-                <td><input type="hidden" name="Id_menu" value=<?php echo $_GET['Id_menu'];?>></td>
+                <td><input type="hidden" name="Id_Menu" value=<?php echo $_GET['Id_Menu'];?>></td>
                 <td><input type="submit" name="update" value="Update"></td>
             </tr>
         </table>

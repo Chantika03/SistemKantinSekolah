@@ -16,9 +16,9 @@
             <tr> 
                 <td>Jenis</td>
                 <td><select name="Jenis">
-                    <option value="makanan"> Makanan <select\>
-                    <option value="minuman"> Minuman <select\>
-
+                    <option value="makanan"> Makanan </option>
+                    <option value="minuman"> Minuman </option>
+                    </select>
                     </td>
             </tr>
             <tr> 
@@ -34,7 +34,19 @@
                 <td><input type="varchar" name="Stok"></td>
             </tr>
             <tr> 
-                <td>Id_penjual</td>
+                <td>Id penjual</td>
+                <?php
+                include "config.php";
+                $query = "SELECT * FROM penjual";
+                $datapenjual = mysqli_query($mysqli, $query);               
+                ?>
+
+                <td><select name="Nama" id="">
+                    <?php
+                    while ($row = mysqli_fetch_array($datapenjual)) {
+                    ?>
+                    <option value="<?=$row['Id_penjual'] ?>"><?=$row['Nama']?> </option> 
+                    <?php } ?> </td>
                
             </tr>
             <tr> 
@@ -48,18 +60,19 @@
  
     // Check If form submitted, insert form data into users table.
     if(isset($_POST['Submit'])) {
-        $Id_menu = $_POST['Id_menu'];
+        $Id_Menu = $_POST['Id_Menu'];
         $Jenis = $_POST['Jenis'];
         $Harga = $_POST['Harga'];
         $Nama = $_POST['Nama'];
         $Stok = $_POST['Stok'];
         $Id_penjual = $_POST['Id_penjual'];
+
         
         // include database connection file
         include_once("config.php");
                 
         // Insert user data into table
-        $result = mysqli_query($mysqli, "INSERT INTO menu (Id_menu,Jenis,Harga,Nama,Stok,Id_penjual) VALUES ('$Id_menu','$Jenis','$Harga','$Nama','$Stok','$Id_penjual')");
+        $result = mysqli_query($mysqli, "INSERT INTO menu (Id_Menu,Jenis,Harga,Nama,Stok,Id_penjual) VALUES ('$Id_Menu','$Jenis','$Harga','$Nama','$Stok','$Id_penjual')");
         
         // Show message when user added
         echo "User added successfully. <a href='index.php'>View Users</a>";
